@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Factories;
-
+use App\Models\Produto;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,10 +14,17 @@ class ProdutoFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
+    
     public function definition()
     {
         return [
-            //
+            'nome' => $this->faker->name(),
+            'preco' => $this->faker->numberBetween(1,50),
+            'descricao' => $this->faker->text(),
+            'quantidade' => $this->faker->numberBetween(1,10),
+            'imagem' => '',
+            'categoria_id' => $this->faker->unique()->numberBetween(1,10)
         ];
     }
 }
