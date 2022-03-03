@@ -22,14 +22,13 @@ class ProdutoController extends Controller
     public function index()
     {
         $produtos = $this->produtos->all();
-        return view('produto.index',compact('produtos'));
-
+        return view('produto.index', compact('produtos'));
     }
 
     public function create()
     {
         $categorias = $this->categorias->all();
-        return view('produto.crud',compact('categorias'));
+        return view('produto.crud', compact('categorias'));
     }
 
 
@@ -40,7 +39,7 @@ class ProdutoController extends Controller
         $produto->preco = $request->input('preco');
         $produto->descricao = $request->input('descricao');
         $produto->quantidade = $request->input('quantidade');
-        $imagem = $request->file('imagem')->store('produtos','public');
+        $imagem = $request->file('imagem')->store('produtos', 'public');
         $produto->imagem = $imagem;
         $produto->categoria_id = $request->input('categoria_id');
 
@@ -54,15 +53,16 @@ class ProdutoController extends Controller
     {
         $produto = $this->produtos->find($id);
         $categoria = $this->categorias->find($produto->categoria_id);
-        return json_encode([$produto,$categoria]);
+        $produto->categoria = $categoria->categoria;
+        return json_encode($produto);
     }
 
 
     public function edit($id)
     {
         $produto = $this->produtos->find($id);
-        $categorias =$this->categorias->all();
-        return view('produto.crud',compact('produto','categorias'));
+        $categorias = $this->categorias->all();
+        return view('produto.crud', compact('produto', 'categorias'));
     }
 
 
@@ -70,10 +70,10 @@ class ProdutoController extends Controller
     {
         $data = $request->all();
         $produto = $this->produtos->find($id);
-        
-        if($request->hasFile('imagem')){
+
+        if ($request->hasFile('imagem')) {
             Storage::delete('public/' . $produto->imagem);
-            $data['imagem'] = $request->file('imagem')->store('produtos','public');
+            $data['imagem'] = $request->file('imagem')->store('produtos', 'public');
         }
         $produto->update($data);
         return redirect(route('produto.index'));
@@ -84,7 +84,7 @@ class ProdutoController extends Controller
         $produto = $this->produtos->find($id);
         Storage::drive('public')->delete($produto->imagem);
         $produto->delete();
-        
+
         return redirect(route('produto.index'));
     }
 }
