@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LocaleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\SiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +20,17 @@ use App\Http\Controllers\ProdutoController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//rota para a pagina sem loguin
+Route::get('/produtos', [SiteController::class,'index'])->name('loja');
+Route::get('/produtos/produtos', [SiteController::class,'produtos'])->name('produtos');
+Route::get('/produtos/categorias', [SiteController::class,'categorias'])->name('categorias');
+Route::get('/produtos/buscar', [SiteController::class,'busca'])->name('buscar');
+Route::get('/produtos/json',[SiteController::class,'sematualizar'])->name('json');
 
 Route::middleware('locale')->group(function () {
-
+    
     Route::put('/locale', [LocaleController::class, 'setLocale'])->name('locale');
-
+    
     Route::get('/', function () {
         return redirect()->route('dashboard');
     });
@@ -31,7 +38,7 @@ Route::middleware('locale')->group(function () {
     Auth::routes();
 
     Route::middleware('auth')->group(function () {
-
+        
         //Rota para dashboard
         Route::any('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -42,13 +49,15 @@ Route::middleware('locale')->group(function () {
         Route::resource('user', UserController::class, ['except' => ['show']]);
         Route::resource('categoria', CategoriaController::class, ['except' => ['show']]);
         Route::resource('produto', ProdutoController::class);
-
+        
 
         //Rotas para perfil do usuário
         Route::controller(ProfileController::class)->name('profile.')->group(function () {
             Route::get('profile', 'edit')->name('edit');
             Route::put('profile', 'update')->name('update');
             Route::put('profile/password', 'password')->name('password');
+            
         });
     });
+    
 });
