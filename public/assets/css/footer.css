@@ -1,0 +1,52 @@
+
+h6{
+    font-size: 1.3rem;
+}
+.social-icons{
+    font-size: 1.4rem;
+    color: var(--amarelo);
+    padding: 0 1rem 0 0;
+}
+@media (max-width: 1000px){
+    h6{
+        font-size: 1.1rem;
+    }
+    .social-icons{
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 800px){
+    h6{
+        font-size: 1rem;
+    }
+    .social-icons{
+        font-size: 1.1rem;
+    }
+}
+@media (max-width: 600px){
+    h6{
+        font-size: 0.8rem;
+    }
+    .social-icons{
+        font-size: .9rem;
+    }
+}
+@media (max-width: 400px){
+    h6{
+        font-size: 0.7rem;
+    }
+    .social-icons{
+        font-size: 0.8rem;
+    }
+}
+@media (max-width: 350px){
+    h6{
+        font-size: 0.5rem;
+    }
+    .social-icons{
+        font-size: 0.6rem;
+        padding: 0;
+    }
+    
+}
